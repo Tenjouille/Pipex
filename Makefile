@@ -4,8 +4,7 @@ SRC = src/pipex.c \
       src/cmd_path.c \
       src/cmd_execution.c \
       src/get_next_line.c \
-      src/get_next_line_utils.c \
-	  src/parsing.c
+      src/get_next_line_utils.c
 HEADERS = -I ./include
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g

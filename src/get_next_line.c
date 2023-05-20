@@ -6,7 +6,7 @@
 /*   By: tbourdea <tbourdea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:02:10 by tbourdea          #+#    #+#             */
-/*   Updated: 2023/05/18 19:49:11 by tbourdea         ###   ########.fr       */
+/*   Updated: 2023/05/20 13:22:34 by tbourdea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,11 @@ char	*ft_strjoin(char *s1, char *s2, char sep)
 	while (s1[++i])
 		s3[i] = s1[i];
 	s3[i] = sep;
-	i++;
+	i += len;
 	while (s2[++j])
 		s3[j + i] = s2[j];
 	s3[j + i] = '\0';
-	free(s1);
-	return (s3);
+	return (free(s1), s3);
 }
 
 char	*get_next_line(int fd)
@@ -123,21 +122,3 @@ char	*get_next_line(int fd)
 	arch = ft_newline(arch, size);
 	return (buff);
 }
-
-// int main(void)
-// {
-// 	char	*buff;
-// 	int		fd;
-// 	int		i;
-
-// 	i = 0;
-// 	fd = open("test.txt", O_RDONLY);
-// 	while (i <= 10)
-// 	{
-// 		buff = get_next_line(fd);
-// 		printf("%s", buff);
-// 		free(buff);
-// 		i++;
-// 	}
-// 	return (0);
-// }

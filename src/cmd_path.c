@@ -6,7 +6,7 @@
 /*   By: tbourdea <tbourdea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 19:49:08 by tbourdea          #+#    #+#             */
-/*   Updated: 2023/05/18 19:50:22 by tbourdea         ###   ########.fr       */
+/*   Updated: 2023/05/20 15:06:29 by tbourdea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,54 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	return (0);
 }
 
-char	**ft_allpaths(char **env)
+char	*ft_sepwords(char **dest, char const *s, int c, int j)
+{
+	int	i;
+	int	size;
+
+	size = 0;
+	i = 0;
+	while (s[size] != '\0' && s[size] != c)
+		size++;
+	dest[j] = malloc(sizeof(char) * (size + 1));
+	if (!dest[j])
+	{
+		ft_freeall(dest, j - 1);
+		return (NULL);
+	}
+	while (s[i] != c && s[i] != '\0')
+	{
+		dest[j][i] = s[i];
+		i++;
+	}
+	dest[j][i] = '\0';
+	return (dest[j]);
+}
+
+char	**ft_split(char const *s, char c)
 {
 	int		i;
-	char	*path;
-	char	**allpaths;
+	int		j;
+	char	**dest;
 
 	i = 0;
-	while (env[i])
-	{
-		if (ft_strnstr(env[i], "PATH=", 5) != 0)
-		{
-			path = ft_strnstr(env[i], "PATH=", 5);
-			allpaths = ft_split(path, ':');
-			return (allpaths);
-		}
+	j = 0;
+	if (!s)
+		return (NULL);
+	dest = malloc(sizeof(char *) * (ft_mallocsize(s, c) + 1));
+	if (!dest)
+		return (NULL);
+	while (s[i] && s[i] == c)
 		i++;
-	}	
-	return (NULL);
+	while (j < ft_mallocsize(s, c))
+	{
+		dest[j] = ft_sepwords(dest, &s[i], c, j);
+		while (s[i] != '\0' && s[i] != c)
+			i++;
+		while (s[i] == c)
+			i++;
+		j++;
+	}
+	dest[ft_mallocsize(s, c)] = 0;
+	return (dest);
 }
