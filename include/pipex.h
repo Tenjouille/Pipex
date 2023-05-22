@@ -6,7 +6,7 @@
 /*   By: tbourdea <tbourdea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 19:50:20 by tbourdea          #+#    #+#             */
-/*   Updated: 2023/05/20 15:07:17 by tbourdea         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:55:59 by tbourdea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_fd
 }		t_fd;
 /*					pipex.c					*/
 void	ft_closeall(int fd1, int fd2, int fd3, int fd4);
-int		ft_parsing(pid_t pid, int ac);
+void	ft_manage_unknown_infile(char *av);
 int		ft_parent_process(t_fd *fd, int j);
 int		ft_redirection(t_fd *fd, int j, char **av, char **env);
 /*				cmd_execution.c				*/

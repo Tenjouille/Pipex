@@ -6,7 +6,7 @@
 /*   By: tbourdea <tbourdea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 13:58:46 by tbourdea          #+#    #+#             */
-/*   Updated: 2023/05/20 15:06:20 by tbourdea         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:55:28 by tbourdea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,15 @@ void	ft_closeall(int fd1, int fd2, int fd3, int fd4)
 	close (fd1);
 }
 
-int	ft_parsing(pid_t pid, int ac)
+void	ft_manage_unknown_infile(char *av)
 {
-	if (ac < 5)
-	{
-		ft_putstr_fd("Error, enter 2 filenames and at least 2 commandes.\n", 2);
-		return (1);
-	}
-	if (pid == -1)
-		return (write(2, "Fork Error\n", 11), 1);
-	return (0);
+	char	*infile_not_found;
+
+	infile_not_found = ft_strdup("No such file or directory : ");
+	infile_not_found = ft_strjoin(infile_not_found, av, 0);
+	infile_not_found = ft_strjoin(infile_not_found, "\n", 0);
+	ft_putstr_fd(infile_not_found, 2);
+	free(infile_not_found);
 }
 
 int	ft_redirection(t_fd *fd, int j, char **av, char **env)
@@ -49,7 +48,7 @@ int	ft_redirection(t_fd *fd, int j, char **av, char **env)
 	else if (j == 2)
 	{
 		if (fd->infile < 0)
-			return (1);
+			return (ft_manage_unknown_infile(av[1]), 1);
 		ft_closeall(fd->pipe[0], fd->outfile, fd->outfile, fd->outfile);
 		if (ft_child_process(fd->infile, fd->pipe[1], av[j], env) == -1)
 			return (127);
